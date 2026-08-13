@@ -3,23 +3,31 @@ package ru.bulgacov.qa.pages;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.$;
 
-public class WelcomePage {
-    private final SelenideElement costPage = $$(".t-menu__list li").last();
-    private final SelenideElement wantToQA = $x("/html/body/div[1]/div[42]/div/div/div[32]/div/a");
-    private final SelenideElement runToPay = $(byText("Бегу оплачивать"));
+public class WelcomePage extends BasePage {
+    private final SelenideElement priceMenuButton = $$(".t-menu__list li").last(),
+            wantToQaButton = $x("/html/body/div[1]/div[42]/div/div/div[32]/div/a"),
+            runToPayButton = $(byText("Бегу оплачивать"));
 
+    public WelcomePage openStudySection() {
+        priceMenuButton.click();
 
-    public ResultCostPage clickPrice() {
-        sleep(3000);
-        switchTo().window(1);
-        costPage.click();//welcome страница обучения
-        wantToQA.click();
-        runToPay.click();
+        return this;
+    }
 
-        return new ResultCostPage();
+    public WelcomePage clickWantToQa() {
+        wantToQaButton.click();
+
+        return this;
+    }
+
+    // Оплата открывается новой вкладкой, её Page Object даст switchToWindow
+    public WelcomePage clickRunToPay() {
+        runToPayButton.click();
+
+        return this;
     }
 }

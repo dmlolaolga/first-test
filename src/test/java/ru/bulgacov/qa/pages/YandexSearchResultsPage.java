@@ -2,31 +2,49 @@ package ru.bulgacov.qa.pages;
 
 import com.codeborne.selenide.SelenideElement;
 
-import static com.codeborne.selenide.Selectors.byText;
+import java.time.Duration;
+
+import static com.codeborne.selenide.ClickOptions.usingJavaScript;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.$$;
 
-public class YandexSearchResultsPage {
-    private final SelenideElement closeWindowFirst = $("[aria-label='Нет, спасибо']");
-    private final SelenideElement closeWindowSecond = $("[class='Button DistributionButton DistributionButtonClose DistributionButtonClose_view_button Button_view_clear Button_size_l']");
+public class YandexSearchResultsPage extends BasePage {
+    // Баннеры появляются не всегда, ждём их отдельно от общего таймаута
+    private static final Duration BANNER_TIMEOUT = Duration.ofSeconds(2);
 
-    public YandexSearchResultsPage closeDefaultBrowserSelectWindow() {
-        sleep(3000);
-        if (closeWindowFirst.isDisplayed()) {
-            closeWindowFirst.click();
-        }
+    private final SelenideElement defaultBrowserBanner = $("[aria-label='Нет, спасибо']"),
+            distributionBanner =
+                    $("[class='Button DistributionButton DistributionButtonClose DistributionButtonClose_view_button Button_view_clear Button_size_l']");
 
-        if(closeWindowSecond.isDisplayed()) {
-            closeWindowSecond.click();
+    // isDisplayed() не ждёт появления элемента, поэтому даём условию явный таймаут
+    public YandexSearchResultsPage closeDefaultBrowserBannerIfAppeared() {
+        if (defaultBrowserBanner.is(visible, BANNER_TIMEOUT)) {
+            defaultBrowserBanner.click();
         }
 
         return this;
     }
 
-    public WelcomePage openLink(String webSiteName) {
-        $(byText(webSiteName)).click();
+    // Обычный клик по этому баннеру срабатывает не всегда - кликаем через JS
+    public YandexSearchResultsPage closeDistributionBannerIfAppeared() {
+        if (distributionBanner.is(visible, BANNER_TIMEOUT)) {
+            distributionBanner.click(usingJavaScript());
+        }
 
-        return new WelcomePage();
+        return this;
     }
 
+    /**
+     * Клик по ссылке - действие выдачи, поэтому возвращаем её же:
+     * сайт открывается новой вкладкой, и его Page Object даст switchToWindow.
+     */
+    public YandexSearchResultsPage openLink(String webSiteName) {
+        // Ищем ссылку по адресу: тот же текст лежит в скрытом блоке нейро-ответа
+        $$("a[href*='" + webSiteName + "']").filterBy(visible)
+                .first()
+                .click();
+
+        return this;
+    }
 }

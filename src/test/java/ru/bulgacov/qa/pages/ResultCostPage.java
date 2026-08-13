@@ -3,18 +3,14 @@ package ru.bulgacov.qa.pages;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
 
-public class ResultCostPage {
-    private final SelenideElement costPage = $(".ant-flex h3");
+public class ResultCostPage extends BasePage {
+    private final SelenideElement priceAmount = $(".ant-flex h3");
 
-    public ResultCostPage paymentAmountCheck(String number) {
-        switchTo().window(2);
-        sleep(10000);
-
-        costPage.shouldHave(text(" " + number + " "));// страница оплаты
+    public ResultCostPage checkPriceAmount(String expectedPrice) {
+        priceAmount.shouldHave(text(expectedPrice));
 
         return this;
     }
-
 }

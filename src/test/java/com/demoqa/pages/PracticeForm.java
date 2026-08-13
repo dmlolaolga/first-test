@@ -4,145 +4,123 @@ import com.codeborne.selenide.SelenideElement;
 
 import java.io.File;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class PracticeForm {
-    private final SelenideElement name = $("#firstName");
-    private final SelenideElement surname = $("[placeholder='Last Name']");
-    private final SelenideElement email = $("[class='mr-sm-2 form-control']");
-    private final SelenideElement genderMale = $("[id=gender-radio-1]");
-    private final SelenideElement mobile = $("#userNumber");
-    private final SelenideElement dateOfBirth = $("#dateOfBirthInput");
-    private final SelenideElement yearOfBirth = $(".react-datepicker__year-select");
-    private final SelenideElement monthOfBirth = $(".react-datepicker__month-select");
-    //Этот селектор убран в функцию т.к. строку с $$ нельзя разделять с find
-    //private final SelenideElement day = $$(".react-datepicker__day").find(text("15"));
-    private final SelenideElement subjects = $("#subjectsInput");
-    private final SelenideElement subjectsChoose = $(".subjects-auto-complete__menu");
-    private final SelenideElement hobbiesSports = $("#hobbies-checkbox-1");
-    private final SelenideElement picture = $("#uploadPicture");
-    private final SelenideElement currentAddress = $("#currentAddress");
-    private final SelenideElement state = $("#state");
-    private final SelenideElement stateChoose = $("#state");
-    private final SelenideElement city = $("#city");
-    private final SelenideElement cityChoose = $("#city");
-    private final SelenideElement submitButton = $("#submit");
+    private final SelenideElement nameInput = $("#firstName"),
+            surnameInput = $("[placeholder='Last Name']"),
+            emailInput = $("[class='mr-sm-2 form-control']"),
+            genderMaleRadio = $("[id=gender-radio-1]"),
+            mobileInput = $("#userNumber");
 
-    public PracticeForm fillName(String queryName) {
-        name.setValue(queryName);
+    private final SelenideElement dateOfBirthInput = $("#dateOfBirthInput"),
+            yearOfBirthSelect = $(".react-datepicker__year-select"),
+            monthOfBirthSelect = $(".react-datepicker__month-select");
+
+    private final SelenideElement subjectsInput = $("#subjectsInput"),
+            subjectsMenu = $(".subjects-auto-complete__menu"),
+            hobbiesSportsCheckbox = $("#hobbies-checkbox-1"),
+            pictureInput = $("#uploadPicture"),
+            currentAddressInput = $("#currentAddress"),
+            stateSelect = $("#state"),
+            citySelect = $("#city"),
+            submitButton = $("#submit");
+
+    /**
+     * День зависит от даты из теста, поэтому метод, а не поле.
+     * По тексту ищем условием findBy, а не CSS-селектором.
+     * exactText, иначе "1" совпадёт с "15"; :not(--outside-month) отсекает соседние месяцы.
+     */
+    private SelenideElement dayOfBirth(String day) {
+        return $$(".react-datepicker__day:not(.react-datepicker__day--outside-month)")
+                .findBy(exactText(day));
+    }
+
+    public PracticeForm fillName(String name) {
+        nameInput.setValue(name);
 
         return this;
     }
 
-    public PracticeForm fillSurname(String querySurname) {
-        surname.setValue(querySurname);
+    public PracticeForm fillSurname(String surname) {
+        surnameInput.setValue(surname);
 
         return this;
     }
 
-    public PracticeForm fillEmail(String queryEmail) {
-        //4. Ввести почту alexander.petrov@test.ru
-        email.setValue(queryEmail);
+    public PracticeForm fillEmail(String email) {
+        emailInput.setValue(email);
 
         return this;
     }
 
-    public PracticeForm chooseAGenderMale() {
-        //5. Выбрать пол Male
-        genderMale.click();
+    public PracticeForm chooseGenderMale() {
+        genderMaleRadio.click();
 
         return this;
     }
 
-    public PracticeForm fillPhoneNumber(String queryPhoneNumber) {
-        //6. Ввести телефон 8799900011
-        mobile.setValue(queryPhoneNumber);
+    public PracticeForm fillPhoneNumber(String phoneNumber) {
+        mobileInput.setValue(phoneNumber);
 
         return this;
     }
 
-    public PracticeForm fillDateOfBirth() {
-        //7. Ввести дату рождения
-        dateOfBirth.click();
+    // Дату не вводят, а выбирают - отсюда select. Год, месяц и день - одно действие.
+    public PracticeForm selectDateOfBirth(String day, String month, String year) {
+        dateOfBirthInput.click();
+        yearOfBirthSelect.selectOption(year);
+        monthOfBirthSelect.selectOption(month);
+        dayOfBirth(day).click();
 
         return this;
     }
 
-    public PracticeForm chooseYearOfBirth(String queryYearOfBirth) {
-        // Выбрать год рождения
-        yearOfBirth.selectOption(queryYearOfBirth);
-
-        return this;
-    }
-
-    public PracticeForm chooseMonthOfBirth(String queryMonthOfBirth) {
-        // Выбрать месяц рождения
-        monthOfBirth.selectOption(queryMonthOfBirth);
-
-        return this;
-    }
-
-    public PracticeForm chooseABirthday(String queryBirthday) {
-        // Выбрать день рождения
-        $$(".react-datepicker__day").find(text(queryBirthday)).click();
-
-        return this;
-    }
-
-    public PracticeForm writeAndChooseSubject(String querySubject) {
-        //8. Написать предмет
-        subjects.setValue(querySubject);
-        subjectsChoose.$(byText(querySubject)).click();
+    public PracticeForm writeAndChooseSubject(String subject) {
+        subjectsInput.setValue(subject);
+        subjectsMenu.$(byText(subject)).click();
 
         return this;
     }
 
     public PracticeForm chooseHobbiesSports() {
-        //9. Выбрать хобби
-        hobbiesSports.click();
+        hobbiesSportsCheckbox.click();
 
         return this;
     }
 
-    public PracticeForm uploadProfilePhoto(String queryProfilePhoto) {
-        //10. Загрузить фото профиля
-        picture.uploadFile(new File(queryProfilePhoto));
+    public PracticeForm uploadProfilePhoto(String photoPath) {
+        pictureInput.uploadFile(new File(photoPath));
 
         return this;
     }
 
-    public PracticeForm enterTheCurrentAddress(String queryCurrentAddress) {
-        //11. Вписать адрес: г. Москва, ул. Тверская, д. 1
-        currentAddress.setValue(queryCurrentAddress);
+    public PracticeForm enterCurrentAddress(String address) {
+        currentAddressInput.setValue(address);
 
         return this;
     }
 
-   public  PracticeForm chooseState(String queryState) {
-       //12. Выбрать штат NCR
-       state.scrollIntoView(true).click();
-       stateChoose.$(byText(queryState)).click();
+    public PracticeForm chooseState(String state) {
+        stateSelect.click();
+        stateSelect.$(byText(state)).click();
 
         return this;
-   }
+    }
 
-   public PracticeForm chooseCity(String queryCity) {
-        //13. Выюрать город Delhi
-       city.click();
-       cityChoose.$(byText(queryCity)).click();
+    public PracticeForm chooseCity(String city) {
+        citySelect.click();
+        citySelect.$(byText(city)).click();
 
-       return this;
-   }
+        return this;
+    }
 
-   public TableWithFinalData clickSubmitButton() {
-       //14. Нажать кнопку Submit
-       submitButton.click();
+    public TableWithFinalData submit() {
+        submitButton.click();
 
-       return new TableWithFinalData();
-   }
-
+        return new TableWithFinalData();
+    }
 }
-
