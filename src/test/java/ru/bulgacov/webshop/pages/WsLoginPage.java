@@ -3,6 +3,7 @@ package ru.bulgacov.webshop.pages;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -13,6 +14,7 @@ public class WsLoginPage {
     private final SelenideElement passwordInput = $("input#Password");
     private final SelenideElement rememberMeCheckbox = $("input#RememberMe");
     private final SelenideElement loginButton = $("input.login-button");
+    private final SelenideElement headerEmail = $("label[for='Email']");
 
     public WsLoginPage checkLoginPageOpened() {
         pageTitle.shouldHave(text("Welcome, Please Sign In!"));
@@ -37,6 +39,11 @@ public class WsLoginPage {
     public WsWelcomePage submitLogin() {
         loginButton.click();
         return new WsWelcomePage();
+    }
+    public WsLoginPage verifyEmailValidationErrorAppear() {
+        headerEmail.click();
+        $("span.field-validation-error").shouldBe(visible);
+        return this;
     }
 
 

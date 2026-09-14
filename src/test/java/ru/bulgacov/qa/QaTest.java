@@ -3,10 +3,11 @@ package ru.bulgacov.qa;
 import com.demoqa.pages.PracticeForm;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.qa.pages.YandexSearchPage;
+import ru.bulgacov.webshop.test.TestBase;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class QaTest {
+public class QaTest extends TestBase {
 
     @Test
     void mentoringPriceShouldBe47000Test() {
