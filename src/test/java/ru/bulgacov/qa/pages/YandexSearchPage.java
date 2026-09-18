@@ -4,19 +4,17 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class YandexSearchPage {
+public class YandexSearchPage extends BasePage {
     private final SelenideElement searchInput = $("#text");
-    private final SelenideElement submitPressEnter = $("#text");
-    // fillSerchInput, clickSubmitButton (не рекомендуются)
-    // search, submit
+
     public YandexSearchPage search(String query) {
-        searchInput.setValue(query);//яндекс поиск
+        searchInput.setValue(query);
 
         return this;
     }
 
-    public YandexSearchResultsPage pressEnter() {
-        submitPressEnter.pressEnter();//яндекс поиск
+    public YandexSearchResultsPage submit() {
+        searchInput.pressEnter();
 
         return new YandexSearchResultsPage();
     }
