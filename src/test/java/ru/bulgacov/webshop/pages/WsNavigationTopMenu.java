@@ -15,8 +15,8 @@ public class WsNavigationTopMenu {
         return this;
     }
 
-    public WsDecktopsPage chooseDesktops() {
+    public WsDesktopsPage chooseDesktops() {
         catalogDesktops.click();
-        return new WsDecktopsPage();
+        return new WsDesktopsPage();
     }
 }

@@ -16,7 +16,7 @@ public class LoginTest {
 
 
     @BeforeEach
-    void  beforeAll() {
+    void beforeEach() {
         password = faker.harryPotter().character() + faker.number().positive();
         email = faker.internet().emailAddress();
 
@@ -26,10 +26,10 @@ public class LoginTest {
                         faker.name().lastName(),
                         email,
                         password)
-                .chekUserLoggedIn(email);
+                .checkUserLoggedIn(email);
 
-        clearBrowserCookies();
-        clearBrowserLocalStorage();
+        cookies().clear();
+        localStorage().clear();
     }
     @Test
     void successLoginTest() {
@@ -40,11 +40,6 @@ public class LoginTest {
                 .enterPassword (password)
                 .checkRememberMe()
                 .submitLogin()
-                .checkUserLoggedId(email);
-
-
-        System.out.println(1);
-
-
+                .checkUserLoggedIn(email);
     }
 }
