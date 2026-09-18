@@ -1,9 +1,8 @@
 package ru.bulgacov.webshop.test;
 
-import net.datafaker.Faker;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.webshop.pages.WsBuildYourOwnCheapComputerPage;
@@ -15,7 +14,6 @@ import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.bulgacov.webshop.config.Config.WEB_SHOP_REGISTRATION_URL;
 import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
 
 @Tag("Cart")

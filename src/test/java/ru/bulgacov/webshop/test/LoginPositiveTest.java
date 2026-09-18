@@ -2,6 +2,8 @@ package ru.bulgacov.webshop.test;
 
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.webshop.pages.WsRegistrationPage;
 import ru.bulgacov.webshop.pages.WsWelcomePage;
@@ -44,7 +46,7 @@ public class LoginPositiveTest extends TestBase {
                 .openLogin()
                 .checkLoginPageOpened()
                 .enterEmail(email)
-                .enterPassword (password)
+                .enterPassword(password)
                 .checkRememberMe()
                 .submitLogin()
                 .checkUserLoggedIn(email);
