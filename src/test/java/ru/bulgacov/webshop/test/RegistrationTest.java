@@ -1,11 +1,9 @@
-package ru.bulgacov.webshop;
+package ru.bulgacov.webshop.test;
 
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
-import ru.bulgacov.webshop.pages.WsRegistrationPage;
 import ru.bulgacov.webshop.pages.WsWelcomePage;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
 
@@ -20,7 +18,7 @@ public class RegistrationTest {
 
         open(WEB_SHOP_URL, WsWelcomePage.class)
         .openRegistration()
-                .verifyRegistratinOpened()
+                .verifyRegistrationOpened()
                 .selectMaleGender()
                 .enterFirstName(faker.name().firstName())
                 .enterLastName(faker.name().lastName())
@@ -28,7 +26,7 @@ public class RegistrationTest {
                 .enterPassword(password)
                 .confirmPassword(password)
                 .submitRegistration()
-                .chekRegistrationCompleted()
-                .chekUserLoggedIn(email);
+                .checkRegistrationCompleted()
+                .checkUserLoggedIn(email);
     }
 }

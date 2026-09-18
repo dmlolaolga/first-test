@@ -1,6 +1,5 @@
 package ru.bulgacov.webshop.pages;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
@@ -23,7 +22,7 @@ public class WsWelcomePage {
         return new WsLoginPage();
     }
 
-    public WsWelcomePage checkUserLoggedId(String email) {
+    public WsWelcomePage checkUserLoggedIn(String email) {
         userEmailInHeader.shouldHave(text(email));
         return this;
 

@@ -10,17 +10,17 @@ import static com.codeborne.selenide.Selenide.$$;
 public class WsRegistrationPage {
     private final SelenideElement pageTitle = $("div.page-title");
     private final SelenideElement maleGenderRadio = $("input#gender-male");
-    private final SelenideElement firstNameInput =  $("input#FirstName");
-    private final SelenideElement lastNameInput =  $("input#LastName");
-    private final SelenideElement emailInput =  $("input#Email");
-    private final SelenideElement passwordInput =   $("input#Password");
-    private final SelenideElement confirmPasswordInput =   $("input#ConfirmPassword");
-    private final SelenideElement submitRegistrationButton =   $("input#register-button");
-    private final SelenideElement resultText =   $("div.result");
+    private final SelenideElement firstNameInput = $("input#FirstName");
+    private final SelenideElement lastNameInput = $("input#LastName");
+    private final SelenideElement emailInput = $("input#Email");
+    private final SelenideElement passwordInput = $("input#Password");
+    private final SelenideElement confirmPasswordInput = $("input#ConfirmPassword");
+    private final SelenideElement submitRegistrationButton = $("input#register-button");
+    private final SelenideElement resultText = $("div.result");
     private final ElementsCollection headerLinks = $$("div.header-links ul li a");
 
 
-    public WsRegistrationPage register(String firstName, String lastName, String email, String password){
+    public WsRegistrationPage register(String firstName, String lastName, String email, String password) {
         selectMaleGender()
                 .enterFirstName(firstName)
                 .enterLastName(lastName)
@@ -28,50 +28,58 @@ public class WsRegistrationPage {
                 .enterPassword(password)
                 .confirmPassword(password)
                 .submitRegistration()
-                .chekRegistrationCompleted();
-
+                .checkRegistrationCompleted();
         return this;
-
     }
-    public   WsRegistrationPage verifyRegistratinOpened() {
+
+    public WsRegistrationPage verifyRegistrationOpened() {
         pageTitle.shouldHave(text("Register"));
         return this;
 
     }
-    public  WsRegistrationPage selectMaleGender() {
+
+    public WsRegistrationPage selectMaleGender() {
         maleGenderRadio.click();
         return this;
     }
-    public  WsRegistrationPage enterFirstName(String firstName) {
-       firstNameInput.setValue(firstName);
+
+    public WsRegistrationPage enterFirstName(String firstName) {
+        firstNameInput.setValue(firstName);
         return this;
     }
-    public  WsRegistrationPage enterLastName(String lastName) {
+
+    public WsRegistrationPage enterLastName(String lastName) {
         lastNameInput.setValue(lastName);
         return this;
     }
-    public  WsRegistrationPage enterEmail(String email) {
+
+    public WsRegistrationPage enterEmail(String email) {
         emailInput.setValue(email);
         return this;
     }
-    public  WsRegistrationPage enterPassword(String password) {
-       passwordInput.setValue(password);
+
+    public WsRegistrationPage enterPassword(String password) {
+        passwordInput.setValue(password);
         return this;
     }
-    public  WsRegistrationPage confirmPassword(String password) {
+
+    public WsRegistrationPage confirmPassword(String password) {
         confirmPasswordInput.setValue(password);
         return this;
     }
-    public  WsRegistrationPage submitRegistration() {
+
+    public WsRegistrationPage submitRegistration() {
         submitRegistrationButton.click();
         return this;
     }
-    public  WsRegistrationPage chekRegistrationCompleted() {
+
+    public WsRegistrationPage checkRegistrationCompleted() {
         resultText.shouldHave(text("Your registration completed"));
         return this;
     }
-    public  WsRegistrationPage chekUserLoggedIn(String email) {
-       headerLinks.get(0).shouldHave(text(email));
+
+    public WsRegistrationPage checkUserLoggedIn(String email) {
+        headerLinks.get(0).shouldHave(text(email));
         return this;
     }
 
