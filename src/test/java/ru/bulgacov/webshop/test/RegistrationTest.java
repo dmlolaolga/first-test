@@ -3,12 +3,13 @@ package ru.bulgacov.webshop.test;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.webshop.pages.WsWelcomePage;
+import ru.bulgacov.webshop.test.TestBase;
 
 import static com.codeborne.selenide.Selenide.*;
 import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
 
 
-public class RegistrationTest {
+public class RegistrationTest extends TestBase {
     private static final Faker faker = new Faker();
 
     @Test

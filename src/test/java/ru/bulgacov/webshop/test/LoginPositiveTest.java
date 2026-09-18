@@ -5,12 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.webshop.pages.WsRegistrationPage;
 import ru.bulgacov.webshop.pages.WsWelcomePage;
+
 import static com.codeborne.selenide.Selenide.*;
 import static ru.bulgacov.webshop.config.Config.WEB_SHOP_REGISTRATION_URL;
 import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
 
-public class LoginTest {
+@Tag("Login")
+@Tag("Positive")
+public class LoginPositiveTest extends TestBase {
+
     private static final Faker faker = new Faker();
+
     private String email;
     private String password;
 
@@ -31,7 +36,9 @@ public class LoginTest {
         cookies().clear();
         localStorage().clear();
     }
+
     @Test
+    @DisplayName("Успешная авторизация зарегистрированного пользователя")
     void successLoginTest() {
         open(WEB_SHOP_URL, WsWelcomePage.class)
                 .openLogin()

@@ -2,7 +2,6 @@ plugins {
     id 'java'
 }
 
-
 repositories {
     mavenCentral()
 }
@@ -10,10 +9,64 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("com.codeborne:selenide:7.17.0")
-    testRuntimeOnly ("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("net.datafaker:datafaker:2.7.0")
 }
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register('positiveTest', Test) {
+    group = 'verification'
+    description = 'Запускает все позитивные тесты'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
+
+    useJUnitPlatform {
+        includeTags 'Positive'
+    }
+}
+
+tasks.register('negativeTest', Test) {
+    group = 'verification'
+    description = 'Запускает все негативные тесты'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
+
+    useJUnitPlatform {
+        includeTags 'Negative'
+    }
+}
+tasks.register('loginTest', Test) {
+    group = 'verification'
+    description = 'Запускает все тесты Login'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
+
+    useJUnitPlatform {
+        includeTags 'Login'
+    }
+}
+tasks.register('cartTest', Test) {
+    group = 'verification'
+    description = 'Запускает все тесты Cart'
+
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
+
+    useJUnitPlatform {
+        includeTags 'Cart'
+    }
 }

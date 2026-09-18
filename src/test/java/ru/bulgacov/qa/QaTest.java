@@ -7,10 +7,11 @@ import org.junit.jupiter.api.Test;
 import ru.bulgacov.qa.pages.ResultCostPage;
 import ru.bulgacov.qa.pages.WelcomePage;
 import ru.bulgacov.qa.pages.YandexSearchPage;
+import ru.bulgacov.webshop.test.TestBase;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class QaTest {
+public class QaTest extends TestBase {
 
     @BeforeAll
     static void setUp() {

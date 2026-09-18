@@ -1,0 +1,19 @@
+plainaddress
+@domain.com
+user@
+user@.com
+user@domain
+user@domain.
+user..name@example.com
+.user@example.com
+user.@example.com
+user name@example.com
+user@exam ple.com
+user@@example.com
+user@domain..com
+user@example,com
+user@example..com
+@example.com
+user@-example.com
+user@example-.com
+- user@example.com

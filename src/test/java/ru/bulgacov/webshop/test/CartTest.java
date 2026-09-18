@@ -1,6 +1,10 @@
 package ru.bulgacov.webshop.test;
 
+import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.webshop.pages.WsBuildYourOwnCheapComputerPage;
 import ru.bulgacov.webshop.pages.WsNavigationTopMenu;
@@ -11,9 +15,12 @@ import java.util.Locale;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.bulgacov.webshop.config.Config.WEB_SHOP_REGISTRATION_URL;
 import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
 
-public class CartTest {
+@Tag("Cart")
+@Tag("Positive")
+public class CartTest extends TestBase{
     private final AuthSteps authSteps = new AuthSteps();
     private static final String PRODUCT_NAME = "Build your own cheap computer";
     private static final String PROCESSOR = "Slow";
@@ -36,6 +43,7 @@ public class CartTest {
     }
 
     @Test
+    @DisplayName("Проверка общей суммы, колличества добавленных товаров в корзине")
     void addItemToCartTest() {
         WsBuildYourOwnCheapComputerPage page =
                 open(WEB_SHOP_URL, WsNavigationTopMenu.class)
