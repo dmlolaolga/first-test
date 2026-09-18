@@ -28,13 +28,11 @@ public class WsRegistrationPage {
                 .enterPassword(password)
                 .confirmPassword(password)
                 .submitRegistration()
-                .chekRegistrationCompleted();
-
+                .checkRegistrationCompleted();
         return this;
-
     }
 
-    public WsRegistrationPage verifyRegistratinOpened() {
+    public WsRegistrationPage verifyRegistrationOpened() {
         pageTitle.shouldHave(text("Register"));
         return this;
 
@@ -75,15 +73,15 @@ public class WsRegistrationPage {
         return this;
     }
 
-    public WsRegistrationPage chekRegistrationCompleted() {
+    public WsRegistrationPage checkRegistrationCompleted() {
         resultText.shouldHave(text("Your registration completed"));
         return this;
     }
 
-    public WsRegistrationPage chekUserLoggedIn(String email) {
-
+    public WsRegistrationPage checkUserLoggedIn(String email) {
         headerLinks.get(0).shouldHave(text(email));
         return this;
     }
+
 
 }

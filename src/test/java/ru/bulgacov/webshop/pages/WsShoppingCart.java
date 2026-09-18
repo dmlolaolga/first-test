@@ -2,6 +2,9 @@ package ru.bulgacov.webshop.pages;
 
 import com.codeborne.selenide.SelenideElement;
 
+import java.util.Locale;
+
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -20,8 +23,13 @@ public class WsShoppingCart {
     }
 
     public WsShoppingCart checkPriceSubtotal(String itemPrice, String itemQuantity) {
-        priceSubtotal.shouldHave(text(String.valueOf(
-                Float.parseFloat(itemPrice) * Float.parseFloat(itemQuantity))));
+        float total = Float.parseFloat(itemPrice) * Float.parseFloat(itemQuantity);
+
+        // Форматируем число: %.2f означает "число с плавающей точкой, 2 знака после запятой"
+        // Locale.US гарантирует, что разделителем будет точка, а не запятая
+        String expectedTotal = String.format(Locale.US, "%.2f", total);
+
+        priceSubtotal.shouldHave(exactText(expectedTotal));
         return this;
     }
 

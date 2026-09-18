@@ -1,4 +1,4 @@
-package ru.bulgacov.webshop;
+package ru.bulgacov.webshop.test;
 
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ public class RegistrationTest extends TestBase {
 
         open(WEB_SHOP_URL, WsWelcomePage.class)
         .openRegistration()
-                .verifyRegistratinOpened()
+                .verifyRegistrationOpened()
                 .selectMaleGender()
                 .enterFirstName(faker.name().firstName())
                 .enterLastName(faker.name().lastName())
@@ -27,7 +27,7 @@ public class RegistrationTest extends TestBase {
                 .enterPassword(password)
                 .confirmPassword(password)
                 .submitRegistration()
-                .chekRegistrationCompleted()
-                .chekUserLoggedIn(email);
+                .checkRegistrationCompleted()
+                .checkUserLoggedIn(email);
     }
 }

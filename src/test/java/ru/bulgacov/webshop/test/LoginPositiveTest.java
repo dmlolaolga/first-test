@@ -1,7 +1,8 @@
 package ru.bulgacov.webshop.test;
 
 import net.datafaker.Faker;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.bulgacov.webshop.pages.WsRegistrationPage;
 import ru.bulgacov.webshop.pages.WsWelcomePage;
 
@@ -18,12 +19,10 @@ public class LoginPositiveTest extends TestBase {
     private String email;
     private String password;
 
+
     @BeforeEach
-    void setUpUser() {
-
-        password = faker.harryPotter().character()
-                + faker.number().positive();
-
+    void beforeEach() {
+        password = faker.harryPotter().character() + faker.number().positive();
         email = faker.internet().emailAddress();
 
         open(WEB_SHOP_REGISTRATION_URL, WsRegistrationPage.class)
@@ -31,25 +30,23 @@ public class LoginPositiveTest extends TestBase {
                         faker.name().firstName(),
                         faker.name().lastName(),
                         email,
-                        password
-                )
-                .chekUserLoggedIn(email);
+                        password)
+                .checkUserLoggedIn(email);
 
-        clearBrowserCookies();
-        clearBrowserLocalStorage();
+        cookies().clear();
+        localStorage().clear();
     }
 
     @Test
     @DisplayName("Успешная авторизация зарегистрированного пользователя")
     void successLoginTest() {
-
         open(WEB_SHOP_URL, WsWelcomePage.class)
                 .openLogin()
                 .checkLoginPageOpened()
                 .enterEmail(email)
-                .enterPassword(password)
+                .enterPassword (password)
                 .checkRememberMe()
                 .submitLogin()
-                .checkUserLoggedId(email);
+                .checkUserLoggedIn(email);
     }
 }

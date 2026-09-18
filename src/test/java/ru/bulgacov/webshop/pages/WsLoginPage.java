@@ -46,15 +46,4 @@ public class WsLoginPage {
         return this;
     }
 
-
-    public WsLoginPage login(String email, String password, boolean rememberMe ) {
-        enterEmail(email)
-                .enterPassword(password);
-
-        if (rememberMe) {
-            checkRememberMe();
-        }
-
-        return this;
-    }
 }
