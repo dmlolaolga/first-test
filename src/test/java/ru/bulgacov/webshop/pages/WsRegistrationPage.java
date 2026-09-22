@@ -33,7 +33,7 @@ public class WsRegistrationPage {
     }
 
     public WsRegistrationPage verifyRegistrationOpened() {
-        pageTitle.shouldHave(text("Register"));
+        pageTitle.shouldHave(text("Log In"));
         return this;
 
     }
