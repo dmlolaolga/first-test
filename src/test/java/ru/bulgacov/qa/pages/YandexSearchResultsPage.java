@@ -1,6 +1,11 @@
 package ru.bulgacov.qa.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
+import jdk.jfr.Description;
 
 import java.time.Duration;
 
@@ -9,6 +14,10 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
+@Owner("Lola.Maer")
+@Severity(SeverityLevel.NORMAL)
+@Description("Страница результатов поиска Яндекс. Содержит методы для обработки всплывающих баннеров " +
+        "(включая клики через JS) и перехода по ссылкам в поисковой выдаче.")
 public class YandexSearchResultsPage extends BasePage {
     // Баннеры появляются не всегда, ждём их отдельно от общего таймаута
     private static final Duration BANNER_TIMEOUT = Duration.ofSeconds(2);
@@ -39,6 +48,7 @@ public class YandexSearchResultsPage extends BasePage {
      * Клик по ссылке - действие выдачи, поэтому возвращаем её же:
      * сайт открывается новой вкладкой, и его Page Object даст switchToWindow.
      */
+    @Step("Закрыть баннер 'Сделать браузером по умолчанию' (если он отображается)")
     public YandexSearchResultsPage openLink(String webSiteName) {
         // Ищем ссылку по адресу: тот же текст лежит в скрытом блоке нейро-ответа
         $$("a[href*='" + webSiteName + "']").filterBy(visible)

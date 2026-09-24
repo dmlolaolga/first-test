@@ -1,5 +1,9 @@
 package ru.bulgacov.webshop.config;
 
+/**
+ * Конфигурационные константы для тестов WebShop.
+ * Содержит базовые URL-адреса приложения.
+ */
 public class Config {
     public static final String WEB_SHOP_URL = "https://demowebshop.tricentis.com";
 

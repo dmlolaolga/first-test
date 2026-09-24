@@ -1,6 +1,9 @@
 package ru.bulgacov.qa;
 
 import com.codeborne.selenide.Configuration;
+import io.qameta.allure.*;
+import jdk.jfr.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -9,9 +12,19 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
+@Epic("UI Автоматизация (E2E)")
+@Feature("Сквозное тестирование сайтов")
+@Owner("Lola.Maer")
+@Description("E2E тесты")
 public class QaTestFirst {
 
-    @Test
+
+        @Test
+        @Feature("Сайт ivanbulgakovqa.ru")
+        @Story("Проверка стоимости менторства")
+        @Severity(SeverityLevel.CRITICAL)
+        @DisplayName("Стоимость предоплаты за обучение должна составлять 47 000 рублей")
+        @Description("Сценарий: поиск в Яндексе -> переход на сайт -> навигация до страницы оплаты -> проверка итоговой суммы.")
     void mentoringPriceShouldBe47000Test() {
         /*
          * Тест-кейс - проверить, что  предоплата по обучению - 47000 рублей
@@ -24,14 +37,14 @@ public class QaTestFirst {
          * 7. нажать кнопку "Бегу оплачивать"
          * 8. проверить, что к оплате 47 000 рублей
          */
-        //Оставлять отакрытым браузер
+        //Оставлять открытым браузер
         Configuration.holdBrowserOpen = true;
         open("https://ya.ru/");
         $("#text").setValue("bulgakov qa");
         $(".search3__button.search3__button_icon_yes").pressEnter();
 
         //Убрать баннер "Установить браузер"
-        if($("[aria-label='Нет, спасибо']").isDisplayed()) {
+        if ($("[aria-label='Нет, спасибо']").isDisplayed()) {
             $("[aria-label='Нет, спасибо']").click();
         }
         sleep(3000);
@@ -51,6 +64,11 @@ public class QaTestFirst {
     }
 
     @Test
+    @Feature("Сайт demoqa.com")
+    @Story("Форма регистрации студента")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Успешная регистрация студента с заполнением всех полей формы")
+    @io.qameta.allure.Description("Сценарий: заполнение формы Student Registration Form на demoqa.com и полная валидация введенных данных в итоговой таблице.")
     void submitStudentRegistrationWithAllFieldsTest() {
         /*
          * Тест-кейс: Заполнение формы «Student Registration Form» на demoqa.com

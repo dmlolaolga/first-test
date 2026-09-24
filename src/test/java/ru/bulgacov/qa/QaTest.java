@@ -2,7 +2,10 @@ package ru.bulgacov.qa;
 
 import com.codeborne.selenide.Configuration;
 import com.demoqa.pages.PracticeForm;
+import io.qameta.allure.*;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.bulgacov.qa.pages.ResultCostPage;
 import ru.bulgacov.qa.pages.WelcomePage;
@@ -11,6 +14,9 @@ import ru.bulgacov.webshop.test.TestBase;
 
 import static com.codeborne.selenide.Selenide.open;
 
+@Epic("UI Автоматизация (E2E)")
+@Owner("Lola.Maer")
+@Description("Класс содержит сквозные (End-to-End) тесты для проверки ключевых бизнес-процессов на внешних ресурсах.")
 public class QaTest extends TestBase {
 
     @BeforeAll
@@ -21,6 +27,11 @@ public class QaTest extends TestBase {
     }
 
     @Test
+    @Feature("Сайт ivanbulgakovqa.ru")
+    @Story("Проверка стоимости менторства")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Стоимость предоплаты за обучение должна составлять 47 000 рублей")
+    @Description("Сквозной сценарий: поиск в Яндексе -> переход на сайт -> навигация до страницы оплаты -> проверка итоговой суммы.")
     void mentoringPriceShouldBe47000Test() {
         /*
          * Тест-кейс - проверить, что  предоплата по обучению - 47000 рублей
@@ -53,6 +64,12 @@ public class QaTest extends TestBase {
     }
 
     @Test
+    @Feature("Сайт demoqa.com")
+    @Story("Форма регистрации студента")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Успешная регистрация студента с заполнением всех полей формы")
+    @Description("Сквозной тест заполнения формы Practice Form: ввод личных данных, выбор даты из календаря, " +
+            "загрузка файла, выбор региона и полная валидация введенных данных в итоговой таблице.")
     void submitStudentRegistrationWithAllFieldsTest() {
         /*
          * Тест-кейс: Заполнение формы «Student Registration Form» на demoqa.com
