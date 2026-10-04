@@ -25,7 +25,7 @@ import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
         "корректный расчет итоговой стоимости с учетом динамических наценок и количества.")
 @Tag("Cart")
 @Tag("Positive")
-public class CartTest extends TestBase{
+public class CartTest extends TestBase {
     private final AuthSteps authSteps = new AuthSteps();
     private static final String PRODUCT_NAME = "Build your own cheap computer";
     private static final String PROCESSOR = "Slow";
@@ -52,10 +52,9 @@ public class CartTest extends TestBase{
     }
 
 
-
     @Story("Расчет итоговой стоимости и количества товаров")
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Проверка общей суммы, колличества добавленных товаров в корзине")
+    @DisplayName("Проверка общей суммы, количества добавленных товаров в корзине")
     @Description("Тест регистрирует пользователя, переходит к товару 'Build your own cheap computer', " +
             "выбирает процессор, устанавливает количество и добавляет товар в корзину. " +
             "Ожидаемая цена вычисляется динамически: Базовая цена + Наценка за процессор. " +

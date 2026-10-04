@@ -29,10 +29,16 @@ dependencies {
     testImplementation("com.codeborne:selenide:7.17.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("net.datafaker:datafaker:2.7.0")
+    testImplementation("org.aeonbits.owner:owner:1.0.12")
 }
 
 test {
     useJUnitPlatform()
+    // Передаем все системные свойства из командной строки/IDE в тесты
+    systemProperties = System.properties
+
+    // ИЛИ конкретно одно свойство (если не хотите передавать все):
+    // systemProperty "run", System.getProperty("run")
 }
 
 tasks.register('positiveTest', Test) {
