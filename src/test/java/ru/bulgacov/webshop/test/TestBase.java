@@ -7,9 +7,14 @@ import io.qameta.allure.selenide.AllureSelenide;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import ru.bulgacov.webshop.config.WebDriverConfig;
 import ru.bulgacov.webshop.util.AttachManager;
 
+
 import static com.codeborne.selenide.Selenide.*;
+import static ru.bulgacov.webshop.config.Config.getSelenoidChromeOptions;
+import static ru.bulgacov.webshop.config.Config.getWebDriverConfig;
+
 
 @Epic("WebShop UI Тесты")
 @Feature("Базовая конфигурация тестов")
@@ -18,29 +23,39 @@ import static com.codeborne.selenide.Selenide.*;
         "подключение интеграции с Allure и сбор артефактов (скриншоты, логи) после каждого теста.")
 public class TestBase {
 
+    private static final WebDriverConfig config = getWebDriverConfig();
+
     @Step("Глобальная инициализация: настройка браузера и подключение Allure-слушателя Selenide")
     @Description("Устанавливает размер окна браузера 1920x1080 и регистрирует AllureSelenide listener " +
             "для автоматического логирования команд Selenide в отчет.")
     @Owner("Lola.Maer")
     @Severity(SeverityLevel.BLOCKER) // Если настройка упадет, все тесты не запустятся
-    @BeforeAll
+    @BeforeAll// Объединение двух @BeforeAll в один для предсказуемого порядка выполнения
     static void setUp() {
-        // Объединение двух @BeforeAll в один для предсказуемого порядка выполнения
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 8000; // Таймаут ожидания элементов
-
+        // 1. Подключаем Allure listener
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
                 .screenshots(true)      // Делать скриншоты при падении шагов Selenide
                 .savePageSource(true)); // Сохранять HTML страницы при падении шагов Selenide
-    }
-/*
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        // 2. Базовые настройки из конфига
+        Configuration.browserSize = config.browserSize();
+        Configuration.browser = config.browser();
+        Configuration.timeout = 8000; // Стандартный таймаут Selenide
+        // 3. Настройки ТОЛЬКО для удаленного запуска
+        if ("remote".equals(System.getProperty("run"))) {
+            Configuration.timeout = 8000; // Таймаут ожидания элементов
+            Configuration.remote = "https://" + config.selenoidUser() + ":" + config.selenoidPassword() + "@" + config.selenoidUrl();
+            Configuration.browserCapabilities = getSelenoidChromeOptions();
+        }
     }
 
-    @BeforeAll
-    static void before() {
-        Configuration.browserSize = "1920x1080";
-    }*/
+    /*
+            SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+        }
+
+        @BeforeAll
+        static void before() {
+            Configuration.browserSize = "1920x1080";
+        }*/
 
     @Step("Очистка состояния браузера и сбор артефактов после выполнения теста")
     @Description("Очищает cookies и localStorage для изоляции тестов друг от друга. " +
@@ -58,6 +73,11 @@ public class TestBase {
         AttachManager.browserConsoleLogs();
         // Опционально: закрытие браузера после каждого теста, если тесты тяжелые
         // com.codeborne.selenide.Selenide.closeWebDriver();
+
+        if ("remote".equals(config.run())) {
+            AttachManager.addVideo();
+        }
+
     }
 
     /*

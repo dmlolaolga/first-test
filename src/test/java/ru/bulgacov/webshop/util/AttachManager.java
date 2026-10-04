@@ -8,9 +8,12 @@ import jdk.jfr.Description;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.sessionId;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
@@ -38,7 +41,7 @@ public class AttachManager {
     @Description("Извлекает логи консоли браузера (JavaScript ошибки, предупреждения, информация). " +
             "Помогает выявить проблемы на стороне клиента, которые не видны в UI.")
     public static String browserConsoleLogs() {
-        if(!WebDriverRunner.hasWebDriverStarted()) {
+        if (!WebDriverRunner.hasWebDriverStarted()) {
             return "WebDriver has not been started yet";
         }
 
@@ -52,4 +55,24 @@ public class AttachManager {
             return "Unable to get browser console logs: " + e.getMessage();
         }
     }
+
+    @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
+    @Description("Добавляет HTML-плеер со ссылкой на видео записи сессии из Selenoid.")
+    public static String addVideo() {
+        return "<html><body><video width ='100%' controls autoplay><source src='"
+                + getVideoUrl()
+                + "' type='video/mp4'></video></body></html>";
+    }
+
+    private static URL getVideoUrl() {
+        String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId() + ".mp4";
+
+        try {
+            return new URL(videoUrl);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

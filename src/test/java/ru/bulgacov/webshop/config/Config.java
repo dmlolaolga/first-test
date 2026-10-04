@@ -1,5 +1,13 @@
 package ru.bulgacov.webshop.config;
 
+import org.aeonbits.owner.ConfigFactory;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
 /**
  * Конфигурационные константы для тестов WebShop.
  * Содержит базовые URL-адреса приложения.
@@ -10,4 +18,27 @@ public class Config {
     public static final String WEB_SHOP_REGISTRATION_URL = WEB_SHOP_URL + "/register";
 
     public static final String WEB_SHOP_LOGIN_URL = WEB_SHOP_URL + "/login";
+
+    private static final WebDriverConfig config = ConfigFactory.create(WebDriverConfig.class, System.getProperties());
+
+    public static WebDriverConfig getWebDriverConfig() {
+        return config;
+    }
+
+    public static ChromeOptions getSelenoidChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        options.setCapability("browserVersion", config.browserVersion());
+
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("name", "Lola test");
+        selenoidOptions.put("sessionTimeout", "15m");
+        selenoidOptions.put("env", List.of("TZ=UTC"));
+        selenoidOptions.put("labels", Map.of("manual", "true"));
+        selenoidOptions.put("enableVideo", config.enableVideo());
+        selenoidOptions.put("enableVNC", config.enableVNC());
+
+        options.setCapability("selenoid:options", selenoidOptions);
+
+        return options;
+    }
 }
