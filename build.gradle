@@ -93,7 +93,7 @@ tasks.register('positiveTest', Test) {
     outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
 
     useJUnitPlatform {
-        includeTags 'Positive'
+        includeTags 'positive'
     }
 }
 
@@ -107,7 +107,7 @@ tasks.register('negativeTest', Test) {
     outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
 
     useJUnitPlatform {
-        includeTags 'Negative'
+        includeTags 'negative'
     }
 }
 tasks.register('loginTest', Test) {

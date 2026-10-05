@@ -20,7 +20,7 @@ public interface WebDriverConfig extends Config {
 
     // Настройки браузера
     @Key("browserName")
-    @DefaultValue("edge")
+    @DefaultValue("chrome")
     String browser();
 
     @DefaultValue("154.0")
