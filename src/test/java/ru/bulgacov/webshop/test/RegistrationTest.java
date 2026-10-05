@@ -16,7 +16,7 @@ public class RegistrationTest extends TestBase {
     private static final Faker faker = new Faker();
 
     @Test
-    @Tag("positive")
+    //@Tag("positive")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Регистрация нового пользователя")
     //@Disabled
