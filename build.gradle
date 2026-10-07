@@ -23,8 +23,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation"io.qameta.allure:allure-junit5:$allureVersion"
-    testImplementation"io.qameta.allure:allure-selenide:$allureVersion"
+    testImplementation "io.qameta.allure:allure-junit5:$allureVersion"
+    testImplementation "io.qameta.allure:allure-selenide:$allureVersion"
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("com.codeborne:selenide:7.17.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -40,6 +40,48 @@ test {
     // ИЛИ конкретно одно свойство (если не хотите передавать все):
     // systemProperty "run", System.getProperty("run")
 }
+tasks.register('uiTest', Test) {
+    group = 'verification'
+    description = 'Запускает UI тесты (опционально с доп. тегом)'
+
+    // ВАЖНО: Без этих строк будет NO-SOURCE
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    outputs.upToDateWhen { false }
+
+    useJUnitPlatform {
+        def tag = System.getProperty("tag")
+        // если тэг указан - запускаем ui + тэг тест
+        // если нет - только ui
+        if (tag != null && !tag.isBlank()) {
+            includeTags("UI & ${tag}")
+        } else {
+            includeTags("UI")
+        }
+    }
+    systemProperties(System.getProperties())
+}
+tasks.register('apiTest', Test) {
+    group = 'verification'
+    description = 'Запускает API тесты (опционально с доп. тегом)'
+
+    // ВАЖНО: Без этих строк будет NO-SOURCE
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    outputs.upToDateWhen { false }
+
+    useJUnitPlatform {
+        def tag = System.getProperty("tag")
+        // если тэг указан - запускаем api + тэг тест
+        // если нет - только api
+        if (tag != null && !tag.isBlank()) {
+            includeTags("API & ${tag}")
+        } else {
+            includeTags("API")
+        }
+    }
+    systemProperties(System.getProperties())
+}
 
 tasks.register('positiveTest', Test) {
     group = 'verification'
@@ -51,7 +93,7 @@ tasks.register('positiveTest', Test) {
     outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
 
     useJUnitPlatform {
-        includeTags 'Positive'
+        includeTags 'positive'
     }
 }
 
@@ -65,7 +107,7 @@ tasks.register('negativeTest', Test) {
     outputs.upToDateWhen { false }//отключение проверки актуальности задачи(тесты кааждый раз запускаются)
 
     useJUnitPlatform {
-        includeTags 'Negative'
+        includeTags 'negative'
     }
 }
 tasks.register('loginTest', Test) {

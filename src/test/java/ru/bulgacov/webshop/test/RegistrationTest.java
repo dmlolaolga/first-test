@@ -16,7 +16,6 @@ public class RegistrationTest extends TestBase {
     private static final Faker faker = new Faker();
 
     @Test
-    @Tag("positive")
     @Severity(SeverityLevel.CRITICAL)
     @Story("Регистрация нового пользователя")
     //@Disabled
@@ -27,6 +26,7 @@ public class RegistrationTest extends TestBase {
             "проверка, что пользователь авторизован и email отображается в шапке.")
     @Link(name = "Тест-кейс", url = "https://...")
     @Issue("BUG-19")
+    @Tags({@Tag("UI"), @Tag("positive")})
     void registrationTest() {
         String password = faker.harryPotter().character() + faker.number().positive();
         String email = faker.internet().emailAddress();

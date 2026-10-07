@@ -3,10 +3,7 @@ package ru.bulgacov.webshop.test;
 
 import io.qameta.allure.*;
 import jdk.jfr.Description;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.bulgacov.webshop.pages.WsBuildYourOwnCheapComputerPage;
 import ru.bulgacov.webshop.pages.WsNavigationTopMenu;
 import ru.bulgacov.webshop.pages.WsShoppingCart;
@@ -24,7 +21,7 @@ import static ru.bulgacov.webshop.config.Config.WEB_SHOP_URL;
 @Description("Тесты, проверяющие функциональность корзины: добавление кастомизируемых товаров, " +
         "корректный расчет итоговой стоимости с учетом динамических наценок и количества.")
 @Tag("Cart")
-@Tag("Positive")
+@Tag("positive")
 public class CartTest extends TestBase {
     private final AuthSteps authSteps = new AuthSteps();
     private static final String PRODUCT_NAME = "Build your own cheap computer";
@@ -61,6 +58,7 @@ public class CartTest extends TestBase {
             "Проверяется соответствие фактической суммы в корзине вычисленному значению.")
     @Link(name = "Тест-кейс", url = "https://...")
     @Test
+    @Tags({@Tag("UI"), @Tag("positive")})
     void addItemToCartTest() {
         // Навигация и проверка базовых данных
         WsBuildYourOwnCheapComputerPage page =

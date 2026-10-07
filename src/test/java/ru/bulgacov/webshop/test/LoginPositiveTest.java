@@ -57,7 +57,8 @@ public class LoginPositiveTest extends TestBase {
         @Description("Проверяет полный флоу успешной авторизации: " +
                 "открытие страницы логина → ввод email и пароля → установка чекбокса 'Запомнить меня' → " +
                 "подтверждение формы → проверка, что пользователь авторизован.")
-       // @Link(name = "Тест-кейс", url = "https://...")
+        @Tags({@Tag("UI"), @Tag("positive")})
+            // @Link(name = "Тест-кейс", url = "https://...")
         void successLoginTest() {
             open(WEB_SHOP_LOGIN_URL, WsLoginPage.class)
                     .checkLoginPageOpened()
@@ -69,6 +70,7 @@ public class LoginPositiveTest extends TestBase {
         }
     }
 
+    @Tags({@Tag("UI"), @Tag("negative")})
     @ParameterizedTest(name = "Авторизация с невалидным email: {0}")
     @CsvFileSource(resources = "/email.csv")
     void innalidEmaiLoginTest(String email) {
