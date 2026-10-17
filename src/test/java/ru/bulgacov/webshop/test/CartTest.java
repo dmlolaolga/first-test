@@ -46,6 +46,7 @@ public class CartTest extends TestBase {
     @Step("Подготовка: Регистрация нового пользователя для теста корзины")
     void beforeEach() {
         authSteps.registerNewUser();
+
     }
 
 

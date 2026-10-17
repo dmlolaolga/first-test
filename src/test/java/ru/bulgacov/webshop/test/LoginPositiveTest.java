@@ -36,7 +36,7 @@ public class LoginPositiveTest extends TestBase {
                 "для изоляции теста авторизации.")
         @BeforeEach
         void beforeEach() {
-            password = faker.harryPotter().character() + faker.number().positive();
+            password = createPassword();
             email = faker.internet().emailAddress();
 
             open(WEB_SHOP_REGISTRATION_URL, WsRegistrationPage.class)
@@ -70,6 +70,7 @@ public class LoginPositiveTest extends TestBase {
         }
     }
 
+
     @Tags({@Tag("UI"), @Tag("negative")})
     @ParameterizedTest(name = "Авторизация с невалидным email: {0}")
     @CsvFileSource(resources = "/email.csv")
@@ -80,5 +81,9 @@ public class LoginPositiveTest extends TestBase {
                 .enterPassword("password")
                 .verifyEmailValidationErrorAppear()
                 .submitLogin();
+    }
+
+    private String createPassword() {
+        return faker.harryPotter().character() + "_" + faker.breakingBad().character() + "-" + faker.number().positive();
     }
 }
