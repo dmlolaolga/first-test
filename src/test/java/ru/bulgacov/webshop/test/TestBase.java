@@ -24,6 +24,7 @@ import static ru.bulgacov.webshop.config.Config.getWebDriverConfig;
 public class TestBase {
 
     private static final WebDriverConfig config = getWebDriverConfig();
+    protected String field = "fild";
 
     @Step("Глобальная инициализация: настройка браузера и подключение Allure-слушателя Selenide")
     @Description("Устанавливает размер окна браузера 1920x1080 и регистрирует AllureSelenide listener " +
